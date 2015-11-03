@@ -6,14 +6,22 @@
   but you can create a blog page-specific content if you want.
 {% endcomment %}
 
+{% assign src = '' %}
+{% assign vid = '' %}
+
 <h2>{{ 'homepage.sections.news_title' | t }}</h2>
 
 <div class="grid-uniform latest-news">
+  
   {% for article in blogs['news'].articles limit:6 %}
 
     <div class="grid__item large--one-third">
-      
-      {% if article.content contains "<img" %}
+      {% if article.image %}
+        {% assign src = article | img_url: '1024x1024' %}
+        <a href="{{ article.url }}" title="{{ article.title }}">
+          <div class="tv" style="background-image:url({{ src }})"></div>
+        </a>
+      {% elsif article.content contains "<img" %}
       	<div>
           {% assign src = article.content | split: 'src="' %}
           {% assign src = src[1] | split: '"' | first | replace: '//cdn', 'http://cdn';; | replace: 'http:http://';;, 'http://';; | remove: 'https:' %}
@@ -26,7 +34,7 @@
       	</div>
       {% endif %}
       
-      {% unless article.content contains "<img" %}
+      {% if src == '' %}
         {% if article.content contains "youtube.com/embed/" %}
 
           {% assign vid = article.content | split: 'embed/' %}
@@ -35,7 +43,7 @@
             <iframe id="ytplayer" type="text/html" width="640" height="390" src="//www.youtube.com/embed/{{ vid }}" frameborder="0" ></iframe>
           {% endif %}
         {% endif %}
-      {% endunless %}
+      {% endif %}
       
       <h3><a href="{{ article.url }}">{{ article.title }}</a></h3>
 
@@ -48,7 +56,7 @@
           {{ article.excerpt }}
         {% else %}
           <p><b><time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: format: 'month_day_year' }}</time></b> - 
-            {% if article.content contains "<img" or article.content contains "youtube.com/embed" %}
+            {% if src != '' or vid != '' %}
               {{ article.content | strip_html | truncatewords: 25 }}
             {% else %}
               {{ article.content | strip_html | truncatewords: 60 }}
@@ -91,3 +99,4 @@
     margin-bottom: 30px;
   }
 </style>
+
