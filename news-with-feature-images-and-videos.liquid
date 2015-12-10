@@ -50,21 +50,26 @@
       {% comment %}
         Add a surrounding div with class 'rte' to anything that will come from the rich text editor.
         Since this is just a listing page, you can either use the excerpt or truncate the full article.
+        
+        We can make the text longer to fill the space if no feature image is found
       {% endcomment %}
+      
+      {% assign content = '' %}
+      {% if article.excerpt.size > 0 %}
+        {% assign content = article.excerpt %}
+      {% else %}
+        {% assign content = article.content %}
+      {% endif %}
+      {% if src != '' or vid != '' %}
+        {% assign content = content | strip_html | truncatewords: 25 | strip %}
+      {% else %}
+        {% assign content = content | strip_html | truncatewords: 60 | strip %}
+      {% endif %}
+        
       <div class="rte">
-        {% if article.excerpt.size > 0 %}
-          {{ article.excerpt }}
-        {% else %}
-          <p><b><time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: format: 'month_day_year' }}</time></b> - 
-            {% if src != '' or vid != '' %}
-              {{ article.content | strip_html | truncatewords: 25 }}
-            {% else %}
-              {{ article.content | strip_html | truncatewords: 60 }}
-            {% endif %}
-          </p>
-        {% endif %}
-        <p><a href="{{ article.url }}">{{ 'blogs.article.read_more' | t }} &rarr;</a></p>
+        {{ content }}
       </div>
+
 
       {% comment %}
         Show off meta information like number of comments and tags.
