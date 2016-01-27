@@ -9,11 +9,11 @@ Twigs for Timber by Cam @ Elkfox
 http://experts.shopify.com/elkfox
 </pre>
 
-# News With Feature Images & Videos
+# Hand-Picked Related Products Using Tags or Metafields
 
-* [Article](http://twigs.club/library/hand-picked-related-products-using-tags-or-metafields)
-* [Demo](http://twigs-demo.myshopify.com/pages/hand-picked-related-products-using-tags-or-metafields)
-* [Download](https://github.com/Twigs-for-Timber/hand-picked-related-products-using-tags-or-metafields/archive/master.zip)
+* [Article](http://twigs.club/library/news-with-feature-images-and-videos)
+* [Demo](http://twigs-demo.myshopify.com/pages/news-with-feature-images-and-videos)
+* [Download](https://github.com/Twigs-for-Timber/news-with-feature-images-and-videos/archive/master.zip)
 
 
 <a href="https://gratipay.com/Cam/">
